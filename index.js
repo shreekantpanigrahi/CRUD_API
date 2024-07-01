@@ -2,6 +2,8 @@ const express=require('express');
 const mongoose=require('mongoose');
 const Product = require('./models/product.model.js')
 const app= express();
+require('dotenv').config();
+const uri = process.env.MONGODB_URI
 
 app.use(express.json()); 
 app.use(express.urlencoded({extended:false}));
@@ -70,7 +72,10 @@ app.delete('/product/:id', async(req,res)=>{
 
 
 
-mongoose.connect("mongodb+srv://shreekantp0008:E6RWm4hJbAmhulzc@backendcrudapi.c2ynj49.mongodb.net/?retryWrites=true&w=majority&appName=BackendCRUDAPI").then(()=>{
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(()=>{
     console.log("connected to mongodb");
     app.listen(3000, ()=>{
         console.log('server running on port 3000');
